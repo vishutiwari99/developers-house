@@ -12,7 +12,7 @@ const Home = () => {
   };
 
   function startRegister() {
-    history.push("/register");
+    history.push("/authenticate");
     console.log("clicked");
   }
   const history = useHistory();
@@ -24,13 +24,10 @@ const Home = () => {
           ishiqhsiqhsiqihsiqi suqhgsuqsh suhq
         </p>
         <div>
-          <Button onClick={startRegister} text="Get your username" />
+          <Button onClick={startRegister} text="Lets Go" />
         </div>
         <div className={styles.signInWrapper}>
           <span className={styles.hasInvite}>Have an invite?</span>
-          <Link style={signInLink} to="/login">
-            Signin
-          </Link>
         </div>
       </Card>
     </div>
