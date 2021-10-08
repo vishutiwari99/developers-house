@@ -17,7 +17,7 @@ const Home = () => {
   }
   const history = useHistory();
   return (
-    <div className={styles.cardWrapper}>
+    <div className="cardWrapper">
       <Card title="Welcome to CodersHouse" icon="logo">
         <p className={styles.text}>
           loreudiwdw djwhdw dwduhwudhwd wjdhwudhwwwwwhshqshqshqisqsihsihqishiqh

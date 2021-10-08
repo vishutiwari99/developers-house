@@ -1,18 +1,30 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "../../../components/shared/button/Button";
 import Card from "../../../components/shared/card/Card";
 import TextInput from "../../../components/shared/textInput/TextInput";
+import { verifyOtp } from "../../../http";
+import { setAuth } from "../../../store/authSlice";
 import styles from "./StepOtp.module.css";
-const StepOtp = ({ onNext }) => {
+
+const StepOtp = () => {
+  const dispatch = useDispatch();
   const [otp, setOtp] = useState("");
-  const next = () => {};
+  const { phone, hash } = useSelector((state) => state.auth.otp);
+  const submit = async () => {
+    try {
+      const { data } = await verifyOtp({ otp, phone, hash });
+      console.log(data);
+      dispatch(setAuth(data));
+    } catch (err) {}
+  };
   return (
     <>
-      <div className={styles.cardWrapper}>
+      <div className="cardWrapper">
         <Card title="Enter the code you just received" icon="lock">
           <TextInput value={otp} onChange={(e) => setOtp(e.target.value)} />
           <div className={styles.actionButtonWrapper}>
-            <Button onClick={next} text="Next" />
+            <Button onClick={submit} text="Next" />
           </div>
           <p className={styles.bottomParagraph}>
             By entering your email, you're agreeing to our Terms of Service and
