@@ -5,7 +5,9 @@ const cors = require("cors");
 const router = require("./routes");
 const DBConnect = require("./database");
 const cookieParser = require("cookie-parser");
+const morgan = require("morgan");
 app.use(cookieParser());
+app.use(morgan("dev"));
 const corsOption = {
   credentials: true,
   origin: ["http://localhost:3000"],

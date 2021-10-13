@@ -18,7 +18,6 @@ const StepGender = ({ onNext }) => {
   return (
     <>
       <Card title="Select your gender" icon="specs">
-        <p>Pleas?</p>
         <div className={styles.genderWrapper}>
           <div
             style={{ marginRight: "10px" }}
@@ -28,7 +27,7 @@ const StepGender = ({ onNext }) => {
               type="radio"
               value={gender}
               checked={gender === "male"}
-              onClick={() => setGender("male")}
+              onChange={() => setGender("male")}
             />
             <label htmlFor="">Male</label>
           </div>
@@ -37,7 +36,7 @@ const StepGender = ({ onNext }) => {
               type="radio"
               value={gender}
               checked={gender === "female"}
-              onClick={() => setGender("female")}
+              onChange={() => setGender("female")}
             />
             <label htmlFor="">Female</label>
           </div>

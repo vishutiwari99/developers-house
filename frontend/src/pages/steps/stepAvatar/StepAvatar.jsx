@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../../components/shared/button/Button";
 import Card from "../../../components/shared/card/Card";
+import Loader from "../../../components/shared/loader/Loader";
 import { activate } from "../../../http";
 import { setAvatar } from "../../../store/activateSlice";
 import { setAuth } from "../../../store/authSlice";
 import styles from "./StepAvatar.module.css";
 
 const StepAvatar = ({ onNext }) => {
+  const [loading, setLoading] = useState(false);
+  const [mount, setMount] = useState(false);
   const dispatch = useDispatch();
   const { name, avatar } = useSelector((state) => state.activate);
   const { gender } = useSelector((state) => state.activate);
@@ -30,17 +33,28 @@ const StepAvatar = ({ onNext }) => {
     console.log(e);
   }
   async function submit() {
+    setLoading(true);
     try {
       const { data } = await activate({ name, avatar, gender });
       if (data.auth) {
-        dispatch(setAuth(data));
+        if (!mount) {
+          dispatch(setAuth(data));
+        }
       }
       console.log(data);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   }
+  useEffect(() => {
+    return () => {
+      setMount(true);
+    };
+  }, []);
 
+  if (loading) return <Loader message="Activation in progress" />;
   return (
     <>
       <Card title={`Okay,${name}`} icon="specs">
