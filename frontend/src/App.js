@@ -10,13 +10,16 @@ import Navigation from "./components/shared/navigation/Navigation";
 import Authenticate from "./pages/authenticate/Authenticate";
 import Activate from "./pages/activate/Activate";
 import Rooms from "./pages/rooms/Rooms";
+import { useSelector } from "react-redux";
+import { useLoadingWithRefresh } from "./hooks/useLoadingWithResfresh";
+import Loader from "./components/shared/loader/Loader";
 
-const isAuth = false;
-const user = {
-  activated: true,
-};
 function App() {
-  return (
+  // call refresh endpoint
+  const { loading } = useLoadingWithRefresh();
+  return loading ? (
+    <Loader message="Loading, Please wait" />
+  ) : (
     <Router>
       <Navigation />
       <Switch>
@@ -45,6 +48,8 @@ function App() {
 }
 
 const GuestRoute = ({ children, ...rest }) => {
+  const { isAuth } = useSelector((state) => state.auth);
+
   return (
     <Route
       {...rest}
@@ -67,6 +72,8 @@ const GuestRoute = ({ children, ...rest }) => {
 };
 
 const SemiProtectedRoute = ({ children, ...rest }) => {
+  const { user, isAuth } = useSelector((state) => state.auth);
+
   return (
     <Route
       {...rest}
@@ -98,6 +105,7 @@ const SemiProtectedRoute = ({ children, ...rest }) => {
 };
 
 const ProtectedRoute = ({ children, ...rest }) => {
+  const { user, isAuth } = useSelector((state) => state.auth);
   return (
     <Route
       {...rest}
